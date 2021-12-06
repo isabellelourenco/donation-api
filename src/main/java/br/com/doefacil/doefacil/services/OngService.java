@@ -2,6 +2,7 @@ package br.com.doefacil.doefacil.services;
 
 import br.com.doefacil.doefacil.models.Ong;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.doefacil.doefacil.repositories.OngRepository;
@@ -9,8 +10,7 @@ import br.com.doefacil.doefacil.repositories.OngRepository;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/ong")
+@Service
 public class OngService {
     @Autowired
     OngRepository ongRepository;
@@ -38,6 +38,10 @@ public class OngService {
 
     public Ong findById(String id){
         return ongRepository.findById(id).get();
+    }
+
+    public Ong findByEmail(String email) {
+        return ongRepository.findByOngEmail(email);
     }
 
     public Ong updateOng(String id, Ong updatedOng){

@@ -2,15 +2,13 @@ package br.com.doefacil.doefacil.services;
 
 import br.com.doefacil.doefacil.models.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import br.com.doefacil.doefacil.repositories.DonorRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/donor")
+@Service
 public class DonorService {
     @Autowired
     DonorRepository donorRepository;

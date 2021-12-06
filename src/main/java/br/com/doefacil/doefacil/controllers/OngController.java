@@ -31,6 +31,11 @@ public class OngController {
         return ongService.save(ong);
     }
 
+    @GetMapping("/{email}")
+    public Ong searchAll(@PathVariable("email") String email){
+        return ongService.findByEmail(email);
+    }
+
     @DeleteMapping("/delete/{id}")
     public void deleteOngById (@PathVariable("id") String id){
         ongService.deleteById(id);

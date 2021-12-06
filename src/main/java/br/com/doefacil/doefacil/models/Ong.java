@@ -14,15 +14,16 @@ public class Ong {
 
     @Id
     String _id;
-    String address;
-    String email;
-    String phone_number;
-    Binary image;
-    String description;
-    String site;
-    String pix;
-    String bank_name;
-    String bank_agency;
-    String bank_account;
+    String ongName;
+    String ongAddress;
+    String ongEmail;
+    String ongPhone;
+    String ongImg;
+    String ongDescription;
+    String ongSite;
+    String ongPix;
+    String ongBankName;
+    String ongBankAgency;
+    String ongBankAccount;
 
 }

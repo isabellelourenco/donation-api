@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OngRepository extends MongoRepository<Ong,String> {
+
+    Ong findByOngEmail(String email);
+
 }
