@@ -2,6 +2,8 @@ package br.com.doefacil.doefacil.controllers;
 
 import br.com.doefacil.doefacil.models.Ong;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.doefacil.doefacil.services.OngService;
 
@@ -17,18 +19,34 @@ public class OngController {
     OngService ongService;
 
     @GetMapping("/details/{id}")
-    public Ong searchOng (@PathVariable("id") String id){
-        return ongService.search(id).get();
+    public ResponseEntity<Ong> searchOng (@PathVariable("id") String id){
+        try{
+           Ong ong = ongService.search(id).get();
+            return new ResponseEntity<>(ong, HttpStatus.OK);
+        }catch (NullPointerException ex){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/list")
-    public List<Ong> searchAll(){
-        return ongService.searchAll();
+    public ResponseEntity<List<Ong>> searchAll(){
+        try {
+            return new ResponseEntity<>(ongService.searchAll(),HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/register")
-    public Ong registerOng(@RequestBody Ong ong) throws ParseException{
-        return ongService.save(ong);
+    public ResponseEntity<Ong> registerOng(@RequestBody Ong ong) throws ParseException{
+        try{
+            Ong newOng =  ongService.save(ong);
+            return new ResponseEntity<>(newOng,HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{email}")
@@ -37,14 +55,26 @@ public class OngController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteOngById (@PathVariable("id") String id){
-        ongService.deleteById(id);
+    public ResponseEntity<String> deleteOngById (@PathVariable("id") String id){
+        try{
+            String deleteMessage = "Usuário deletado com sucesso";
+            ongService.deleteById(id);
+            return new ResponseEntity<>(deleteMessage,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PutMapping("/update/{id}")
-    public Ong updateOng (@PathVariable ("id") String id, @RequestBody Ong updatedOng){
-        Ong ong = ongService.findById(id);
+    public ResponseEntity<Ong> updateOng (@PathVariable ("id") String id, @RequestBody Ong updatedOng){
+        try{
+            Ong ongId = ongService.findById(id);
+            Ong ong = ongService.updateOng(id, updatedOng);
+            return new ResponseEntity<>(ong,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        return ongService.updateOng(id, updatedOng);
     }
 }
