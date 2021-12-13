@@ -9,6 +9,7 @@ import br.com.doefacil.doefacil.services.OngService;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -40,7 +41,7 @@ public class OngController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Ong> registerOng(@RequestBody Ong ong) throws ParseException{
+    public ResponseEntity<Ong> registerOng(@RequestBody Ong ong) {
         try{
             Ong newOng =  ongService.save(ong);
             return new ResponseEntity<>(newOng,HttpStatus.CREATED);
@@ -57,13 +58,23 @@ public class OngController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteOngById (@PathVariable("id") String id){
         try{
-            String deleteMessage = "Usuário deletado com sucesso";
+            String deleteMessage = "Ong deletada com sucesso";
             ongService.deleteById(id);
             return new ResponseEntity<>(deleteMessage,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<String> deleteAllOng() {
+        try{
+            String deleteMessage = "Todas as Ongs foram deletadas";
+            ongService.deleteAll();
+            return new ResponseEntity<>(deleteMessage,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/update/{id}")

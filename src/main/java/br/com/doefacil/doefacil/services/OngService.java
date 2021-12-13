@@ -36,6 +36,10 @@ public class OngService {
         ongRepository.deleteById(id);
     }
 
+    public void deleteAll(){
+        ongRepository.deleteAll();
+    }
+
     public Ong findById(String id){
         return ongRepository.findById(id).get();
     }
